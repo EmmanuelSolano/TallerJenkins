@@ -183,9 +183,10 @@
                                     <label for="role">Role</label>
                                     <div class="form-group" id="cbOpciones">
                                         <select>
+                                            <option>--Seleccionar opción--</option>
                                             <c:forEach items="${lists.listWithRoles}" var="dato" >
 
-
+                                                
                                                 <option>${dato.nameRole}</option>
 
                                             </c:forEach>

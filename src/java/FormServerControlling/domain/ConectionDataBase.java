@@ -43,7 +43,7 @@ public class ConectionDataBase {
             List<User> listWithUsers = new ArrayList<>();
             Connection con = (Connection) stablishConectionDataBase();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select *from Usuario ");
+            ResultSet rs = st.executeQuery("select *from UserApp ");
             User user;
             while (rs.next()) {
                 int id = rs.getInt(1);
@@ -90,7 +90,7 @@ public class ConectionDataBase {
     }
     public void insertUser(User user) {
         try {
-            String sqlInsert = "INSERT INTO Usuario(Email,Username,Surname,"
+            String sqlInsert = "INSERT INTO UserApp(Email,Username,Surname,"
                     + "Second_Surname,Password,Role) values(?,?,?,?,?,?)";
             Connection con = (Connection) stablishConectionDataBase();
             CallableStatement stmtInsert = con.prepareCall(sqlInsert);
@@ -170,7 +170,7 @@ public class ConectionDataBase {
                  }
             }
             Connection con = (Connection) stablishConectionDataBase();
-            PreparedStatement pps = con.prepareStatement("update Usuario set Email='"
+            PreparedStatement pps = con.prepareStatement("update UserApp set Email='"
                     +user.getCorreo()
                     + "', Username='"
                     +user.getNombre()+"', Surname='"
