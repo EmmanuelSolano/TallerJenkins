@@ -165,7 +165,7 @@ public class ConectionDataBase {
             int role=0;
             for (int i = 0; i < listUser.size(); i++) {
                  aux = listUser.get(i);
-                 if(aux.getNameRole().equals(user.getRoleEnLaApp())){
+                 if(aux.getNameRole().equals(user.getRoleEnLaApp())||aux.getId()==user.getId()){
                      role = aux.getId();
                  }
             }

@@ -29,6 +29,17 @@
         });
     </script>
     <script>
+        function messageAlert(){
+            //formScriptRoleSubmit
+            var tramiteTXT = document.getElementById("tramite");
+            var nameTXT = document.getElementById("name");
+            
+            var action = confirm("Esta seguro de que desea "+tramiteTXT.value+" a "+nameTXT.value);
+            if(action === true){
+                var formEx = document.getElementById("formScriptRoleSubmit");
+                formEx.submit();
+            }  
+        }
         function Eliminar1(i) {
             var idTXT = document.getElementById("id");
             var nameTXT = document.getElementById("name");
@@ -123,7 +134,7 @@
                                 <button class="btn btn-info" onclick="Eliminar1(this)">Insertar Role</button>
 
                             </div>
-                            <form action="scriptRoleSubmit" method="post" >
+                            <form id="formScriptRoleSubmit" action="scriptRoleSubmit" method="post" >
                                 <div class="form-group">
                                     <label for="id">Id</label>
                                     <input type="text" class="form-control" id="id" name="id" value="" readonly>
@@ -140,11 +151,12 @@
                                     <label for="tramite">Tramite</label>
                                     <input type="text" class="form-control" id="tramite" name="tramite" value="Insertar Role" readonly>
                                 </div>
+                                </form> 
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-warning">Salvar cambios</button>
+                                    <button  class="btn btn-warning" onclick="messageAlert()">Salvar cambios</button>
 
                                 </div>
-                            </form> 
+                            
                         </div>
                     </div>
                 </div>
