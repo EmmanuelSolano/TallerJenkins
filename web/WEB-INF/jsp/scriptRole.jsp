@@ -26,57 +26,103 @@
         //$('#Productos').dataTable();
         $(document).ready(function () {
             $('#Administrador').dataTable();
+
+            $('#Administrador').on('click', '#Editar', function () {
+                Eliminar1(this);
+            });
+
+            $('#Administrador').on('click', '#Eliminar', function () {
+                Eliminar1(this);
+            });
         });
-    </script>
-    <script>
-        function messageAlert(){
+
+        function messageAlert() {
             //formScriptRoleSubmit
+            var idTXT = document.getElementById("id").value;
             var tramiteTXT = document.getElementById("tramite");
-            var nameTXT = document.getElementById("name");
-            
-            var action = confirm("Esta seguro de que desea "+tramiteTXT.value+" a "+nameTXT.value);
-            if(action === true){
-                var formEx = document.getElementById("formScriptRoleSubmit");
-                formEx.submit();
-            }  
-        }
-        function Eliminar1(i) {
-            var idTXT = document.getElementById("id");
-            var nameTXT = document.getElementById("name");
-            var descriptionTXT = document.getElementById("description");
-            var tramiteTXT = document.getElementById("tramite");
-            var tramiteChild = i;
-            tramiteTXT.value = tramiteChild.innerHTML;
+            var nameTXT = document.getElementById("name").value;
 
-            if (i.innerHTML === "Insertar Role") {
-                descriptionTXT.readOnly = false;
-                nameTXT.readOnly = false;
-                descriptionTXT.value = "";
-                nameTXT.value = "";
+            var descriptionTXT = document.getElementById("description").value;
+            if (tramiteTXT.value === "" || nameTXT === "" || descriptionTXT === "") {
+                alert("Hay campos que deben de llenarse");
             } else {
+                var tramiteText = "";
+                if (tramiteTXT.value === "Insertar Role") {
+                    tramiteText = "ingresar";
+                } else if (tramiteTXT.value === "Editar") {
+                    tramiteText = "editar";
+                } else {
+                    tramiteText = "eliminar";
+                }
+                var message = "Esta seguro de que desea " + tramiteText + " al role: \n" +
+                        "Nombre: " + nameTXT + ", Decripcion: " + descriptionTXT;
+                var action = confirm(message);
+                if (action === true) {
+                    var formEx = document.getElementById("formScriptRoleSubmit");
+                    formEx.submit();
+                } else {
+                    document.getElementById("id").value = "";
+                    document.getElementById("tramite").value = "";
+                    document.getElementById("name").value = "";
+                    document.getElementById("description").value = "";
+                }
+            }
 
+        }
+        function LimpiarCampos() {
+            document.getElementById("id").value = "";
+            document.getElementById("tramite").value = "";
+            document.getElementById("name").value = "";
+            document.getElementById("description").value = "";
+        }
 
-                var y = i.parentNode.parentNode;
-                var idChild = y.firstElementChild;
+        function Eliminar1(i) {
+            var y = i.parentNode.parentNode;
+            var idChild = y.firstElementChild;
+            if (idChild.innerHTML === "0") {
+                alert("El Role default no se puede insertar, eliminar, o editar");
+            } else {
                 var nameChild = idChild.nextElementSibling;
                 var descriptionChild = nameChild.nextElementSibling;
 
+                var idTXT = document.getElementById("id");
+                var nameTXT = document.getElementById("name");
+                var descriptionTXT = document.getElementById("description");
+                var tramiteTXT = document.getElementById("tramite");
+                var tramiteChild = i;
+                tramiteTXT.value = tramiteChild.innerHTML;
 
-
-
-                idTXT.value = idChild.innerHTML;
-                nameTXT.value = nameChild.innerHTML;
-                descriptionTXT.value = descriptionChild.innerHTML;
-
-
-                if (i.innerHTML === "Eliminar") {
-                    nameTXT.readOnly = true;
-                    descriptionTXT.readOnly = true;
-                } else {
-                    nameTXT.readOnly = false;
+                if (i.innerHTML === "Insertar Role") {
                     descriptionTXT.readOnly = false;
+                    nameTXT.readOnly = false;
+                    descriptionTXT.value = "";
+                    nameTXT.value = "";
+                } else {
+
+
+                    var y = i.parentNode.parentNode;
+                    var idChild = y.firstElementChild;
+                    var nameChild = idChild.nextElementSibling;
+                    var descriptionChild = nameChild.nextElementSibling;
+
+
+
+
+                    idTXT.value = idChild.innerHTML;
+                    nameTXT.value = nameChild.innerHTML;
+                    descriptionTXT.value = descriptionChild.innerHTML;
+
+
+                    if (i.innerHTML === "Eliminar") {
+                        nameTXT.readOnly = true;
+                        descriptionTXT.readOnly = true;
+                    } else {
+                        nameTXT.readOnly = false;
+                        descriptionTXT.readOnly = false;
+                    }
                 }
             }
+
         }
     </script>
 
@@ -117,12 +163,12 @@
                                         <td>${dato.descriptionRole}</td>
                                         <td align="center">
 
-                                            <button class="btn btn-info" onclick="Eliminar1(this)">Editar</button> 
-
+                                            <!--<button class="btn btn-info" onclick="Eliminar1(this)">Editar</button>--> 
+                                            <button id="Editar" class="btn btn-info">Editar</button>
                                         </td>
                                         <td align="center">
 
-                                            <button class="btn btn-info" onclick="Eliminar1(this)">Eliminar</button> 
+                                            <button id="Eliminar" class="btn btn-info">Eliminar</button> 
 
                                         </td>
 
@@ -131,8 +177,8 @@
 
                             </table>
                             <div class="form-group">
-                                <button class="btn btn-info" onclick="Eliminar1(this)">Insertar Role</button>
-
+                                <button class="btn btn-info" id="InsertarRole" onclick="Eliminar1(this)">Insertar Role</button>
+                                <button class="btn btn-info" id="LimpiarCampos" onclick="LimpiarCampos()">Limpiar Campos</button>
                             </div>
                             <form id="formScriptRoleSubmit" action="scriptRoleSubmit" method="post" >
                                 <div class="form-group">
@@ -151,12 +197,12 @@
                                     <label for="tramite">Tramite</label>
                                     <input type="text" class="form-control" id="tramite" name="tramite" value="Insertar Role" readonly>
                                 </div>
-                                </form> 
-                                <div class="form-group">
-                                    <button  class="btn btn-warning" onclick="messageAlert()">Salvar cambios</button>
+                            </form> 
+                            <div class="form-group">
+                                <button  class="btn btn-warning" onclick="messageAlert()">Salvar cambios</button>
 
-                                </div>
-                            
+                            </div>
+
                         </div>
                     </div>
                 </div>

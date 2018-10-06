@@ -31,11 +31,56 @@
                 var selection = $('#cbOpciones option:selected').val();
                 $('#role').val(selection);
             });
+            $('#Administrador').on('click', '#Editar', function () {
+                Eliminar1(this);
+            });
 
+            $('#Administrador').on('click', '#Eliminar', function () {
+                Eliminar1(this);
+            });
 
         });
-    </script>
-    <script>
+        function messageAlert() {
+            //formScriptRoleSubmit
+            var tramiteTXT = document.getElementById("tramite");
+            var nameTXT = document.getElementById("nombre");
+            var idTXT = document.getElementById("id");
+            var tramiteTXT = document.getElementById("tramite");
+            var primerATXT = document.getElementById("primerA");
+            var segundoATXT = document.getElementById("segundoA");
+            var roleTXT = document.getElementById("role");
+            var correoTXT = document.getElementById("correo");
+            var contrasenaTXT = document.getElementById("contrasena");
+            if (nameTXT.value === "" || tramiteTXT.value === "" || primerATXT.value === "" ||
+                    segundoATXT.value === "" || roleTXT.value === "" || correoTXT.value === "" || contrasenaTXT.value === "" ) {
+                alert("Hay campos que deben de llenarse");
+            } else {
+                var action = confirm("Esta seguro de que desea " + tramiteTXT.value + " a " + nameTXT.value);
+                if (action === true) {
+                    var formEx = document.getElementById("formScriptUserSubmit");
+                    formEx.submit();
+                } else {
+                    document.getElementById("id").value = "";
+                    document.getElementById("nombre").value = "";
+                    document.getElementById("primerA").value = "";
+                    document.getElementById("segundoA").value = "";
+                    document.getElementById("role").value = "";
+                    document.getElementById("correo").value = "";
+                    document.getElementById("tramite").value = "";
+                    document.getElementById("contrasena").value = "";
+
+                    document.getElementById("nombre").readOnly = false;
+                    document.getElementById("primerA").readOnly = false;
+                    document.getElementById("segundoA").readOnly = false;
+                    document.getElementById("role").readOnly = false;
+                    document.getElementById("correo").readOnly = false;
+                    document.getElementById("contrasena").readOnly = false;
+
+                }
+            }
+
+
+        }
         function Eliminar1(i) {
             var idTXT = document.getElementById("id");
             var nombreTXT = document.getElementById("nombre");
@@ -99,6 +144,31 @@
                     contrasenaTXT.readOnly = false;
                 }
             }
+
+
+        }
+        function LimpiarCampos() {
+            document.getElementById("id").value = "";
+            document.getElementById("nombre").value = "";
+            document.getElementById("primerA").value = "";
+            document.getElementById("segundoA").value = "";
+            document.getElementById("role").value = "";
+            document.getElementById("correo").value = "";
+            document.getElementById("tramite").value = "";
+            document.getElementById("contrasena").value = "";
+
+            document.getElementById("nombre").readOnly = false;
+            ;
+            document.getElementById("primerA").readOnly = false;
+            ;
+            document.getElementById("segundoA").readOnly = false;
+            ;
+            document.getElementById("role").readOnly = false;
+            ;
+            document.getElementById("correo").readOnly = false;
+            ;
+            document.getElementById("contrasena").readOnly = false;
+            ;
         }
     </script>
 
@@ -115,7 +185,7 @@
                         <div class="panel-heading" ><h2>Gesti&oacute;n de los usuarios de la aplicaci&oacute;n</h2></div>
                         <div class="panel-body">
                             <div class="jumbotron">
-                                 <p class="lead">Ir a</p>
+                                <p class="lead">Ir a</p>
                                 <li><a href="scriptRole.htm">Gesti&oacute;n de roles</a></li>
                                 <li><a href="index.htm">P&aacute;gina Principal</a></li>
                             </div>
@@ -146,12 +216,12 @@
                                         <td>${dato.correo}</td>
                                         <td align="center">
 
-                                            <button class="btn btn-info" onclick="Eliminar1(this)">Editar</button> 
+                                            <button id="Editar" class="btn btn-info">Editar</button> 
 
                                         </td>
                                         <td align="center">
 
-                                            <button class="btn btn-info" onclick="Eliminar1(this)">Eliminar</button> 
+                                            <button id="Eliminar" class="btn btn-info">Eliminar</button> 
 
                                         </td>
 
@@ -161,8 +231,9 @@
                             </table>
                             <div class="form-group">
                                 <button class="btn btn-info" onclick="Eliminar1(this)">Ingresar Usuario</button>
+                                <button class="btn btn-info" onclick="LimpiarCampos()">Limpiar Campos</button>
                             </div>
-                            <form action="scriptSubmit" method="post" >
+                            <form id="formScriptUserSubmit" action="scriptSubmit" method="post" >
                                 <div class="form-group">
                                     <label for="id">Id</label>
                                     <input type="text" class="form-control" id="id" name="id" value="" readonly>
@@ -186,7 +257,7 @@
                                             <option>--Seleccionar opción--</option>
                                             <c:forEach items="${lists.listWithRoles}" var="dato" >
 
-                                                
+
                                                 <option>${dato.nameRole}</option>
 
                                             </c:forEach>
@@ -207,11 +278,12 @@
                                     <label for="tramite">Tramite</label>
                                     <input type="text" class="form-control" id="tramite" name="tramite" value="Ingresar Usuario" readonly>
                                 </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-warning">Salvar cambios</button>
-
-                                </div>
                             </form> 
+                            <div class="form-group">
+                                <button onclick="messageAlert()" class="btn btn-warning">Salvar cambios</button>
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
