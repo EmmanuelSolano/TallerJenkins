@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  * @author Oscar Luis
  */
 public class ConectionDataBase {
-
+    //PRUEBA DE COMMIT
     public Object stablishConectionDataBase() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
